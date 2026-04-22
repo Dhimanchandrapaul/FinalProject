@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class pageclass {
+public class Resultclass {
 
     // 🔧 Configurable test data
     static final String WEBSITE_URL = "https://www.pepperfry.com/";
