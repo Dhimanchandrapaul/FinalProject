@@ -151,7 +151,7 @@ public class pageclass {
     }
     public static void displayTopProducts(WebDriver driver, JavascriptExecutor js, int count) throws InterruptedException {
         Thread.sleep(5000);
-        js.executeScript("window.scrollBy(0, 500);");
+        js.executeScript("window.scrollBy(0, 300);");
         Thread.sleep(2000);
 
         // Try multiple locator patterns for Pepperfry
@@ -181,7 +181,7 @@ public class pageclass {
     public static void GiftCard(WebDriver driver,JavascriptExecutor js,Actions actions) throws InterruptedException {
 
         Thread.sleep(2000);
-        js.executeScript("window.scrollBy(0,-500);");
+        js.executeScript("window.scrollBy(0,-300);");
         Thread.sleep(2000);
         driver.findElement(By.xpath("//a[normalize-space()='GIFT CARDS']")).click();
 
