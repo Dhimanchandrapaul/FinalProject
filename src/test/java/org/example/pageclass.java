@@ -21,6 +21,8 @@ public class pageclass {
     static final String APPLY_BUTTON_TEXT = "APPLY";
     static final int TOP_N = 3;
 
+
+
     public static void main(String[] args) throws InterruptedException {
 
         WebDriver driver = new ChromeDriver();
@@ -58,7 +60,13 @@ public class pageclass {
         Thread.sleep(5000);
 
         System.out.println("URL: " + driver.getCurrentUrl());
+
+        //call gift card method
+        GiftCard(driver,js,actions);
+
     }
+
+
 
     // ======================= DYNAMIC METHODS =======================
 
@@ -168,5 +176,58 @@ public class pageclass {
             System.out.println("   Price: " + price);
             System.out.println("-----------------------------------------------");
         }
+    }
+
+    public static void GiftCard(WebDriver driver,JavascriptExecutor js,Actions actions) throws InterruptedException {
+
+        Thread.sleep(2000);
+        js.executeScript("window.scrollBy(0,-500);");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//a[normalize-space()='GIFT CARDS']")).click();
+
+
+        Thread.sleep(1000);
+        WebElement birthdayCard=driver.findElement(By.xpath("//img[@alt='Pepperfry Birthday Gift Card']"));
+        actions.click(birthdayCard).perform();
+        Thread.sleep(2000);
+
+
+        WebElement rName = driver.findElement(By.xpath("//input[@formcontrolname='rname']"));
+//        actions.click(sName).perform();
+        actions.sendKeys(rName, "nishank").perform();
+        WebElement sName = driver.findElement(By.xpath("//input[@formcontrolname='sname']"));
+        actions.sendKeys(sName, "Dhiman").perform();
+
+        WebElement rNo=driver.findElement(By.xpath("//input[@formcontrolname='rmob']"));
+        actions.sendKeys(rNo, "9999999999").perform();
+        WebElement sNo=driver.findElement(By.xpath("//input[@formcontrolname='smob']"));
+        actions.sendKeys(sNo, "5555555555").perform();
+
+        WebElement sMail=driver.findElement(By.xpath("//input[@formcontrolname='smail']"));
+        actions.sendKeys(sMail, "Dhiman@gmail.com").perform();
+
+        WebElement msg=driver.findElement(By.xpath("//textarea[@formcontrolname='rmsg']"));
+        actions.sendKeys(msg, "Happy Birthday! Enjoy shopping").perform();
+
+//        driver.findElement(By.xpath("//span[@class='gc-den-card-value' and text()='1000']/ancestor::div[@class='gc-den-card']//a[text()='ADD']")).click();
+        driver.findElement(By.xpath("//span[contains(@class,'gc-den-card-value') and text()='1000']/ancestor::div[contains(@class,'gc-den-card')]//a[text()='ADD']")).click();
+
+//        WebElement btn=driver.findElement(By.id("gc-proceed-checkout-btn"));
+//        actions.click(btn).perform();
+
+//button[@id='gc-proceed-checkout-btn' and .
+
+      WebElement btn=driver.findElement(By.xpath("//button[@id='gc-proceed-checkout-btn']//div"));
+        js.executeScript("arguments[0].click();", btn);
+
+
+        // Get text
+        Thread.sleep(1000);
+        String errorText = driver.findElement(By.xpath(
+                "//div[@class='form-error text-md ng-star-inserted']")).getText();
+        System.out.println("Error msg: "+errorText);
+
+
+
     }
 }
