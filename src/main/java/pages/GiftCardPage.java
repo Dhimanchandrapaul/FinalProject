@@ -1,5 +1,6 @@
 package pages;
 
+import Screenshot.projectSshot;
 import base.BasePage;
 import org.openqa.selenium.*;
 
@@ -66,11 +67,6 @@ public class GiftCardPage extends BasePage {
     }
 
     /** Clicks ADD for the ₹1000 denomination card. */
-//    public void selectAmount1000() {
-//        driver.findElement(ADD_1000_BTN).click();
-//        System.out.println("₹1000 denomination selected.");
-//    }
-    // ✅ FIXED
     public void selectAmount1000() {
         WebElement addBtn = waitForPresence(ADD_1000_BTN);
         scrollIntoView(addBtn);
@@ -78,12 +74,23 @@ public class GiftCardPage extends BasePage {
         jsClick(addBtn);
         System.out.println("₹1000 denomination selected.");
     }
+
     /** Clicks the Proceed to Checkout button. */
     public void clickProceedToCheckout() {
         WebElement btn = driver.findElement(PROCEED_BTN);
         jsClick(btn);
-        pause(1000);
+        pause(2000);   // wait for error popup / validation message to render
         System.out.println("Proceed to Checkout clicked.");
+
+        // 📸 Screenshot #4 — AFTER Proceed clicked (captures the error popup if any)
+        try {
+            WebElement errorMsg = waitForVisibility(FORM_ERROR);
+            scrollIntoView(errorMsg);
+            pause(500);
+        } catch (Exception e) {
+            System.out.println("No error popup appeared after Proceed click.");
+        }
+        projectSshot.capture(driver, "4_AfterProceedClicked_ErrorPopup");
     }
 
     /** Reads and returns the form validation error message. */

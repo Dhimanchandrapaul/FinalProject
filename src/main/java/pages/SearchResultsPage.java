@@ -1,5 +1,6 @@
 package pages;
 
+import Screenshot.projectSshot;
 import base.BasePage;
 import org.openqa.selenium.*;
 
@@ -27,7 +28,6 @@ public class SearchResultsPage extends BasePage {
      */
     public void openMoreFilters() {
         WebElement btn = waitForClickable(MORE_FILTERS_BTN);
-       // btn.click();
         jsClick(btn);
         pause(2000);
         System.out.println("More Filters panel opened.");
@@ -91,6 +91,9 @@ public class SearchResultsPage extends BasePage {
         jsClick(btn);
         pause(3000);
         System.out.println("Clicked: " + buttonText);
+
+        // 📸 Screenshot #2 — AFTER applying filter
+        projectSshot.capture(driver, "2_AfterFilter");
     }
 
     /**
@@ -117,5 +120,8 @@ public class SearchResultsPage extends BasePage {
             System.out.println("   Price: " + price);
             System.out.println("-----------------------------------------------");
         }
+
+        // 📸 Screenshot #3 — TOP PRODUCTS below max price
+        projectSshot.capture(driver, "3_TopProductsBelow_" + maxPrice);
     }
 }

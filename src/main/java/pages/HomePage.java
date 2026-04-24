@@ -1,5 +1,6 @@
 package pages;
 
+import Screenshot.projectSshot;
 import base.BasePage;
 import org.openqa.selenium.*;
 
@@ -48,6 +49,9 @@ public class HomePage extends BasePage {
         actions.sendKeys(Keys.ENTER).perform();
         pause(8000);
         System.out.println("Searched for: " + keyword);
+
+        // 📸 Screenshot #1 — BEFORE filter (search results page, no filters yet)
+        projectSshot.capture(driver, "1_BeforeFilter");
     }
 
     /**

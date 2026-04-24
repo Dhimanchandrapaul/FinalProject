@@ -15,7 +15,8 @@ public class TestConfig {
     public static final String BRAND_NAME         = "WoodenMood";
     public static final String APPLY_BUTTON       = "APPLY";
     public static final int    TOP_N              = 3;
-    public static final int GC_AMOUNT = 1000;
+    public static final int    GC_AMOUNT          = 1000;
+
     // ── Gift Card Form Data ──────────────────────────────────────────────────────
     public static final String GC_RECIPIENT_NAME   = "nishank";
     public static final String GC_SENDER_NAME      = "Dhiman";
