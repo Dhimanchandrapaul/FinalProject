@@ -41,3 +41,7 @@ build/
 #screenshorts/
 screenshots/
 *.png
+
+# Excel files
+*.xlsx
+*.xls
