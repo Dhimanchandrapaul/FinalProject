@@ -75,14 +75,15 @@ public class GiftCardPage extends BasePage {
         System.out.println("₹1000 denomination selected.");
     }
 
-    /** Clicks the Proceed to Checkout button. */
+    /** Clicks the Proceed to Checkout button.
+     *  Waits for error popup if present and takes screenshot. */
     public void clickProceedToCheckout() {
         WebElement btn = driver.findElement(PROCEED_BTN);
         jsClick(btn);
-        pause(2000);   // wait for error popup / validation message to render
+        pause(1000);
         System.out.println("Proceed to Checkout clicked.");
 
-        // 📸 Screenshot #4 — AFTER Proceed clicked (captures the error popup if any)
+        // 📸 Screenshot — AFTER Proceed clicked (captures error popup if any)
         try {
             WebElement errorMsg = waitForVisibility(FORM_ERROR);
             scrollIntoView(errorMsg);
@@ -102,9 +103,7 @@ public class GiftCardPage extends BasePage {
 
     // ── Composite Action ──────────────────────────────────────────────────────────
 
-    /**
-     * Fills all gift card form fields in one call.
-     */
+    /** Fills all gift card form fields in one call. */
     public void fillGiftCardForm(String recipientName, String senderName,
                                  String recipientMobile, String senderMobile,
                                  String senderEmail, String message) {
