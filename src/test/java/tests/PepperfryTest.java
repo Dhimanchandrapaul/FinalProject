@@ -22,7 +22,7 @@ public class PepperfryTest {
     public static void main(String[] args) {
 
         reporter = new ExcelReporter(         // ← moved here
-                "C:/Users/2479652/IdeaProjects/FinalProject/Resources/PepperfryTestResults.xlsx");
+                "Resources/PepperfryTestResults.xlsx");
 
 
         driver = new ChromeDriver();

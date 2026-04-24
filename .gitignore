@@ -37,3 +37,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+#screenshorts/
+screenshots/
+*.png
+
+# Excel files
+*.xlsx
+*.xls
+Resources/
