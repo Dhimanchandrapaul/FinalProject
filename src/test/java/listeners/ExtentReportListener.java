@@ -1,4 +1,4 @@
-package org.example.listeners;
+package listeners;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;

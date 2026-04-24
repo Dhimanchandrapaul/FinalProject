@@ -3,6 +3,7 @@ package pages;
 import base.BasePage;
 import org.openqa.selenium.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultsPage extends BasePage {
@@ -22,21 +23,13 @@ public class SearchResultsPage extends BasePage {
 
     // ── Actions ──────────────────────────────────────────────────────────────────
 
-    /**
-     * Clicks the "More Filters" button to open the filter panel.
-     */
     public void openMoreFilters() {
         WebElement btn = waitForClickable(MORE_FILTERS_BTN);
-       // btn.click();
         jsClick(btn);
         pause(2000);
         System.out.println("More Filters panel opened.");
     }
 
-    /**
-     * Expands a filter accordion section by its display name.
-     * e.g. "Price", "Brand"
-     */
     public void expandFilter(String filterName) {
         By locator = By.xpath(
                 String.format("//accordion-heading[normalize-space()='%s']", filterName));
@@ -48,9 +41,6 @@ public class SearchResultsPage extends BasePage {
         System.out.println("Expanded filter: " + filterName);
     }
 
-    /**
-     * Clears the max price input and sets a new value.
-     */
     public void setMaxPrice(int maxPrice) {
         WebElement maxInput = waitForPresence(MAX_PRICE_INPUT);
         scrollIntoView(maxInput);
@@ -66,10 +56,6 @@ public class SearchResultsPage extends BasePage {
         System.out.println("Max price set to: ₹" + maxPrice);
     }
 
-    /**
-     * Selects a brand checkbox by brand name.
-     * Uses the label[@for] approach to trigger the checkbox.
-     */
     public void selectBrand(String brandName) {
         By locator = By.xpath(String.format("//label[@for='%s']", brandName));
         WebElement brand = waitForPresence(locator);
@@ -80,9 +66,6 @@ public class SearchResultsPage extends BasePage {
         System.out.println("Selected brand: " + brandName);
     }
 
-    /**
-     * Clicks the APPLY button to apply all selected filters.
-     */
     public void clickApply(String buttonText) {
         By locator = By.xpath(String.format("//button[normalize-space()='%s']", buttonText));
         WebElement btn = waitForClickable(locator);
@@ -94,7 +77,8 @@ public class SearchResultsPage extends BasePage {
     }
 
     /**
-     * Prints the top N products (name + price) from the results page.
+     * Prints the top N products (name + price) to console.
+     * Used for quick console verification.
      */
     public void displayTopProducts(int count, int maxPrice) {
         pause(5000);
@@ -117,5 +101,34 @@ public class SearchResultsPage extends BasePage {
             System.out.println("   Price: " + price);
             System.out.println("-----------------------------------------------");
         }
+    }
+
+    /**
+     * Returns first `count` product names and prices from results page.
+     * Each String[] has [0] = product name, [1] = price text.
+     * Used for Excel reporting.
+     */
+    public List<String[]> getAllProductNamesAndPrices(int count) {
+        pause(2000);
+        scrollBy(0, 300);
+        pause(1000);
+
+        List<String[]>   products = new ArrayList<>();
+        List<WebElement> names    = driver.findElements(PRODUCT_NAMES);
+        List<WebElement> prices   = driver.findElements(PRODUCT_PRICES);
+
+        System.out.println("Total products found: " + names.size());
+
+        int limit = Math.min(count, names.size());
+
+        for (int i = 0; i < limit; i++) {
+            String name  = names.get(i).getText();
+            String price = (i < prices.size()) ? prices.get(i).getText() : "0";
+            if (!name.isEmpty() && !price.isEmpty()) {
+                products.add(new String[]{name, price});
+                System.out.println("Product: " + name + " | Price: " + price);
+            }
+        }
+        return products;
     }
 }
