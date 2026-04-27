@@ -76,14 +76,14 @@ public class GiftCardPage extends BasePage {
     }
 
     /** Clicks the Proceed to Checkout button.
-     *  Waits for error popup if present and takes screenshot. */
+     *  Waits for error popup if present. */
     public void clickProceedToCheckout() {
         WebElement btn = driver.findElement(PROCEED_BTN);
         jsClick(btn);
-        pause(1000);
+        pause(2000);
         System.out.println("Proceed to Checkout clicked.");
 
-        // 📸 Screenshot — AFTER Proceed clicked (captures error popup if any)
+        // Wait for error popup to render
         try {
             WebElement errorMsg = waitForVisibility(FORM_ERROR);
             scrollIntoView(errorMsg);
@@ -91,12 +91,19 @@ public class GiftCardPage extends BasePage {
         } catch (Exception e) {
             System.out.println("No error popup appeared after Proceed click.");
         }
-        projectSshot.capture(driver, "4_AfterProceedClicked_ErrorPopup");
     }
 
-    /** Reads and returns the form validation error message. */
+    /** Reads and returns the form validation error message.
+     *  Also captures Screenshot #4 showing the gift card form + error popup. */
     public String getFormErrorMessage() {
-        String error = driver.findElement(FORM_ERROR).getText();
+        WebElement errorEl = waitForVisibility(FORM_ERROR);
+        scrollIntoView(errorEl);
+        pause(500);
+
+        // 📸 Screenshot #4 — Gift card form with error popup visible
+        projectSshot.capture(driver, "4_GiftCard_ErrorPopup");
+
+        String error = errorEl.getText();
         System.out.println("Form error: " + error);
         return error;
     }

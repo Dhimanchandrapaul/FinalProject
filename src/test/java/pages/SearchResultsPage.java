@@ -1,5 +1,6 @@
 package pages;
 
+import Screenshot.projectSshot;
 import base.BasePage;
 import org.openqa.selenium.*;
 
@@ -15,6 +16,9 @@ public class SearchResultsPage extends BasePage {
             "//h2[contains(@class,'product-name')] | //a[contains(@class,'product-title')]");
     private static final By PRODUCT_PRICES   = By.xpath(
             "//span[contains(@class,'offer-price')] | //span[contains(@class,'price-display')]");
+
+    // Ensures screenshot #3 fires only once per run (skips tc007's second call)
+    private boolean topProductsCaptured = false;
 
     // ── Constructor ──────────────────────────────────────────────────────────────
     public SearchResultsPage(WebDriver driver) {
@@ -74,6 +78,9 @@ public class SearchResultsPage extends BasePage {
         jsClick(btn);
         pause(3000);
         System.out.println("Clicked: " + buttonText);
+
+        // 📸 Screenshot #2 — AFTER applying filter
+        projectSshot.capture(driver, "2_AfterFilter");
     }
 
     /**
@@ -129,6 +136,13 @@ public class SearchResultsPage extends BasePage {
                 System.out.println("Product: " + name + " | Price: " + price);
             }
         }
+
+        // 📸 Screenshot #3 — TOP PRODUCTS (only on first call, skip later duplicates)
+        if (!topProductsCaptured) {
+            projectSshot.capture(driver, "3_TopProductsBelow");
+            topProductsCaptured = true;
+        }
+
         return products;
     }
 }
