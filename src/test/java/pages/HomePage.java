@@ -1,13 +1,13 @@
 package pages;
 
 import Screenshot.projectSshot;
-import base.BasePage;
+import factory.BaseClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HomePage extends BasePage {
+public class HomePage extends BaseClass {
 
     // ── Locators ─────────────────────────────────────────────────────────────────
     @FindBy(xpath = "//input[@id='search']")

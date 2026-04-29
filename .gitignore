@@ -39,7 +39,8 @@ build/
 ### Mac OS ###
 .DS_Store
 
-#screenshorts/
+
+# Screenshots
 screenshots/
 *.png
 
@@ -48,6 +49,15 @@ screenshots/
 *.xls
 Resources/
 
-.
+# ExtentReports
 /ExtentReports
 /ExtentReports/TestReport.html
+
+# Allow Cucumber feature files and config.properties
+!src/test/resources/features/
+!src/test/resources/features/*.feature
+!src/test/resources/config.properties
+!src/test/java/stepdefinitions/
+!src/test/java/stepdefinitions/*.java
+!src/test/java/runners/
+!src/test/java/runners/*.java

@@ -1,7 +1,7 @@
 package pages;
 
 import Screenshot.projectSshot;
-import base.BasePage;
+import factory.BaseClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultsPage extends BasePage {
+public class SearchResultsPage extends BaseClass {
 
     // ── Locators ─────────────────────────────────────────────────────────────────
     @FindBy(xpath = "//span[contains(@class,'more-filter')]")

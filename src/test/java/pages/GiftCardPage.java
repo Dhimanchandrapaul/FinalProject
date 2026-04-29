@@ -1,13 +1,13 @@
 package pages;
 
 import Screenshot.projectSshot;
-import base.BasePage;
+import factory.BaseClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class GiftCardPage extends BasePage {
+public class GiftCardPage extends BaseClass {
 
     // ── Locators ─────────────────────────────────────────────────────────────────
     @FindBy(xpath = "//img[@alt='Pepperfry Birthday Gift Card']")
@@ -57,32 +57,50 @@ public class GiftCardPage extends BasePage {
 
     /** Fills the recipient name field. */
     public void fillRecipientName(String name) {
-        actions.sendKeys(recipientName, name).perform();
+        wait.until(ExpectedConditions.visibilityOf(recipientName));
+        recipientName.click();
+        recipientName.clear();
+        recipientName.sendKeys(name);
     }
 
     /** Fills the sender name field. */
     public void fillSenderName(String name) {
-        actions.sendKeys(senderName, name).perform();
+        wait.until(ExpectedConditions.visibilityOf(senderName));
+        senderName.click();
+        senderName.clear();
+        senderName.sendKeys(name);
     }
 
     /** Fills the recipient mobile number field. */
     public void fillRecipientMobile(String mobile) {
-        actions.sendKeys(recipientMobile, mobile).perform();
+        wait.until(ExpectedConditions.visibilityOf(recipientMobile));
+        recipientMobile.click();
+        recipientMobile.clear();
+        recipientMobile.sendKeys(mobile);
     }
 
     /** Fills the sender mobile number field. */
     public void fillSenderMobile(String mobile) {
-        actions.sendKeys(senderMobile, mobile).perform();
+        wait.until(ExpectedConditions.visibilityOf(senderMobile));
+        senderMobile.click();
+        senderMobile.clear();
+        senderMobile.sendKeys(mobile);
     }
 
     /** Fills the sender email field. */
     public void fillSenderEmail(String email) {
-        actions.sendKeys(senderEmail, email).perform();
+        wait.until(ExpectedConditions.visibilityOf(senderEmail));
+        senderEmail.click();
+        senderEmail.clear();
+        senderEmail.sendKeys(email);
     }
 
     /** Fills the gift message textarea. */
     public void fillMessage(String message) {
-        actions.sendKeys(messageArea, message).perform();
+        wait.until(ExpectedConditions.visibilityOf(messageArea));
+        messageArea.click();
+        messageArea.clear();
+        messageArea.sendKeys(message);
     }
 
     /** Clicks ADD for the ₹1000 denomination card. */
