@@ -24,8 +24,9 @@ public class PepperfrySteps {
     private HomePage          homePage;
     private SearchResultsPage resultsPage;
     private GiftCardPage      giftPage;
-    private ExcelReporter     reporter;
+    public static ExcelReporter reporter;
     private List<String[]>    products;
+    public static final String EXCEL_PATH = "ExcelData/PepperfryTestResults.xlsx";
 
     public PepperfrySteps() throws IOException {
         this.driver      = BaseClass.getDriver();
@@ -33,14 +34,22 @@ public class PepperfrySteps {
         this.homePage    = new HomePage(driver);
         this.resultsPage = new SearchResultsPage(driver);
         this.giftPage    = new GiftCardPage(driver);
-        this.reporter    = new ExcelReporter("Resources/GiftCardTestData.xlsx");
+        if (reporter == null) {
+            reporter = new ExcelReporter(EXCEL_PATH);
+        }
     }
 
     // ── Scenario 1: Home Decor Hover ──────────────────────────────────────────────
 
     @Given("the user launches the Pepperfry website")
     public void the_user_launches_the_pepperfry_website() {
-        homePage.open(p.getProperty("website.url"));
+        try {
+            homePage.open(p.getProperty("website.url"));
+            reporter.logResult(1,  "Open Website", "Should open home page", "Opened successfully", "Pass");
+        } catch (Exception e) {
+            reporter.logResult(1, "Open Website",  "Should open home page", e.getMessage(), "Fail");
+            throw e;
+        }
     }
 
     @And("any popup on the page is closed")
@@ -84,18 +93,30 @@ public class PepperfrySteps {
 
     @When("the user searches for {string}")
     public void the_user_searches_for(String keyword) {
-        homePage.searchFor(keyword);
+        try {
+            homePage.searchFor(keyword);
+            reporter.logResult(2,  "Search Bookshelves",  "Should search for Bookshelves", "Searched successfully", "Pass");
+        } catch (Exception e) {
+            reporter.logResult(2,  "Search Bookshelves",  "Should search for Bookshelves", e.getMessage(), "Fail");
+            throw e;
+        }
     }
 
     @And("the user applies a maximum price filter of {int} and selects the brand {string}")
     public void the_user_applies_a_maximum_price_filter_and_selects_brand(int maxPrice, String brand) {
-        resultsPage.openMoreFilters();
-        resultsPage.expandFilter(p.getProperty("price.filter"));
-        resultsPage.setMaxPrice(maxPrice);
-        resultsPage.expandFilter(p.getProperty("brand.filter"));
-        resultsPage.selectBrand(brand);
-        resultsPage.clickApply(p.getProperty("apply.button"));
-        homePage.pause(2000);
+        try {
+            resultsPage.openMoreFilters();
+            resultsPage.expandFilter(p.getProperty("price.filter"));
+            resultsPage.setMaxPrice(maxPrice);
+            resultsPage.expandFilter(p.getProperty("brand.filter"));
+            resultsPage.selectBrand(brand);
+            resultsPage.clickApply(p.getProperty("apply.button"));
+            homePage.pause(2000);
+            reporter.logResult(3, "Apply Filters", "Should apply filters", "Filters applied", "Pass");
+        } catch (Exception e) {
+            reporter.logResult(3,  "Apply Filters",  "Should apply filters", e.getMessage(), "Fail");
+            throw e;
+        }
     }
 
     @And("the top 3 products with their prices should be displayed")
@@ -132,7 +153,13 @@ public class PepperfrySteps {
 
     @When("the user opens gift card option")
     public void the_user_opens_gift_card_option() {
-        homePage.goToGiftCards();
+        try {
+            homePage.goToGiftCards();
+            reporter.logResult(4,  "Go to Gift Card", "Should go to gift card section", "Navigated successfully", "Pass");
+        } catch (Exception e) {
+            reporter.logResult(4, "Go to Gift Card",  "Should go to gift card section", e.getMessage(), "Fail");
+            throw e;
+        }
     }
 
     @And("the user selects the birthday gift card")
@@ -165,9 +192,15 @@ public class PepperfrySteps {
 
     @Then("the sender email validation message should be displayed correctly")
     public void the_sender_email_validation_message_should_be_displayed_correctly() {
-        String error = giftPage.getFormErrorMessage();
-        assertFalse(error == null || error.trim().isEmpty(),
-                "Expected a sender email validation message but none was displayed.");
-        System.out.println("Validation message: " + error.trim());
+        try {
+            String error = giftPage.getFormErrorMessage();
+            assertFalse(error == null || error.trim().isEmpty(),
+                    "Expected a sender email validation message but none was displayed.");
+            System.out.println("Validation message: " + error.trim());
+            reporter.logResult(5,  "Gift Card Error",  "Should show error message", " message: " + error.trim(), "Pass");
+        } catch (AssertionError | Exception e) {
+            reporter.logResult(5,  "Gift Card Error",  "Should show error message", e.getMessage(), "Fail");
+            throw e;
+        }
     }
 }

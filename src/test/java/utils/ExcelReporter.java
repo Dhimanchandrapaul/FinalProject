@@ -19,8 +19,7 @@ public class ExcelReporter {
         this.sheet    = workbook.createSheet("Test Results");
 
         String[] headers = {
-                "S.No", "Test Case ID", "Test Case Name",
-                "Description", "Expected Result", "Actual Result", "Status"
+                "S.No", "Test Case Name", "Expected Result", "Actual Result", "Status"
         };
 
         Row header = sheet.createRow(0);
@@ -29,14 +28,11 @@ public class ExcelReporter {
         }
     }
 
-    public void logResult(int sno, String tcId, String tcName, String description,
-                          String expected, String actual, String status) {
+    public void logResult(int sno, String tcName, String expected, String actual, String status) {
 
         Row row = sheet.createRow(rowNum++);
         row.createCell(0).setCellValue(sno);
-        row.createCell(1).setCellValue(tcId);
         row.createCell(2).setCellValue(tcName);
-        row.createCell(3).setCellValue(description);
         row.createCell(4).setCellValue(expected);
         row.createCell(5).setCellValue(actual);
         row.createCell(6).setCellValue(status);

@@ -269,6 +269,6 @@ public class PepperfryTest {
 
     private void log(String id, String name, String desc,
                      String expected, String actual, String status) {
-        reporter.logResult(serial++, id, name, desc, expected, actual, status);
+//        reporter.logResult(id, name, desc, expected, actual, status);
     }
 }

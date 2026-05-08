@@ -43,6 +43,14 @@ public class Hooks {
     @AfterAll
     public static void globalTearDown() {
         BaseClass.quitDriver();
+        // Save Excel report after all tests
+        try {
+            if (stepdefinitions.PepperfrySteps.reporter != null) {
+                stepdefinitions.PepperfrySteps.reporter.save();
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to save Excel report: " + e.getMessage());
+        }
     }
 
     /**
